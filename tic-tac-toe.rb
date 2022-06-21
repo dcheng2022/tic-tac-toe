@@ -43,6 +43,19 @@ def input_getter(game_board)
   end
 end
 
+unchosen = true
+pieces = %w[X O]
+
+while unchosen
+  puts "Would you like to play with X's or O's?"
+  selected_piece = gets.chomp.upcase
+  if pieces.include?(selected_piece)
+    player_one = Player.new(pieces.delete(selected_piece))
+    player_two = Player.new(pieces.join)
+    unchosen = false
+  end
+end
+
 loop do
   player = Player.total_num_of_pieces.even? ? player_two : player_one
   puts "#{player.piece}'s turn."
