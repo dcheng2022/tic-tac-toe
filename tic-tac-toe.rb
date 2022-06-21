@@ -2,6 +2,7 @@ require 'pry-byebug'
 game_board = Array.new(3) { Array.new(3, ' ') }
 
 class Player 
+  attr_reader :piece
   @@total_num_of_pieces = 0
 
   def initialize(piece)
@@ -22,14 +23,7 @@ class Player
 
   def game_draw? 
   end
-
-  private
-
-  attr_reader :piece
 end
-
-player_one = Player.new('O')
-player_two = Player.new('X')
 
 def input_getter(game_board)
   puts 'Enter a position.'
@@ -51,6 +45,7 @@ end
 
 loop do
   player = Player.total_num_of_pieces.even? ? player_two : player_one
+  puts "#{player.piece}'s turn."
   input = input_getter(game_board)
   game_board[input[0]][input[1]] = player.place_piece
   game_board.each { |row| p row }
