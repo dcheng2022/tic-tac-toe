@@ -31,27 +31,27 @@ end
 player_one = Player.new('O')
 player_two = Player.new('X')
 
-def input_getter
+def input_getter(game_board)
   puts 'Enter a position.'
   loop do
     input = gets.chomp.upcase.split('')
-    next unless input.length == 2 && ('A'..'C').include?(input[0]) && ('1'..'3').include?(input[1])
-
+    unless input.length == 2 && ('A'..'C').include?(input[0]) && ('1'..'3').include?(input[1])
+      puts 'Invalid input received. Please enter A, B, or C followed by 1, 2, or 3.'
+      next
+    end
     input[0] = input[0].ord - 65
     input[1] = input[1].to_i - 1
-    return input
+    if %w[X O].include?(game_board[input[0]][input[1]])
+      puts 'Position already occupied. Please enter another coordinate.'
+    else
+      return input
+    end
   end
 end
 
 loop do
   player = Player.total_num_of_pieces.even? ? player_two : player_one
-  loop do
-    input = input_getter
-    unless %w[X O].include?(game_board[input[0]][input[1]])
-      game_board[input[0]][input[1]] = player.place_piece
-      game_board.each { |row| p row }
-      break
-    end
-    puts 'Position already taken. Try again.'
-  end
+  input = input_getter(game_board)
+  game_board[input[0]][input[1]] = player.place_piece
+  game_board.each { |row| p row }
 end
