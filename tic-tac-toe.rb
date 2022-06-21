@@ -28,6 +28,9 @@ class Player
   attr_reader :piece
 end
 
+player_one = Player.new('O')
+player_two = Player.new('X')
+
 def input_getter
   puts 'Enter a position.'
   loop do
@@ -37,5 +40,18 @@ def input_getter
     input[0] = input[0].ord - 65
     input[1] = input[1].to_i - 1
     return input
+  end
+end
+
+loop do
+  player = Player.total_num_of_pieces.even? ? player_two : player_one
+  loop do
+    input = input_getter
+    unless %w[X O].include?(game_board[input[0]][input[1]])
+      game_board[input[0]][input[1]] = player.place_piece
+      game_board.each { |row| p row }
+      break
+    end
+    puts 'Position already taken. Try again.'
   end
 end
