@@ -1,5 +1,4 @@
 require 'pry-byebug'
-game_board = Array.new(3) { Array.new(3, ' ') }
 
 class Player 
   attr_reader :piece
@@ -43,23 +42,29 @@ def input_getter(game_board)
   end
 end
 
-unchosen = true
-pieces = %w[X O]
-
-while unchosen
-  puts "Would you like to play with X's or O's?"
-  selected_piece = gets.chomp.upcase
-  if pieces.include?(selected_piece)
-    player_one = Player.new(pieces.delete(selected_piece))
-    player_two = Player.new(pieces.join)
-    unchosen = false
+def choose_pieces
+  pieces = %w[X O]
+  loop do
+    puts "Would you like to play with X's or O's?"
+    selected_piece = gets.chomp.upcase
+    if pieces.include?(selected_piece)
+      player_one = Player.new(pieces.delete(selected_piece))
+      player_two = Player.new(pieces.join)
+      return [player_one, player_two]
+    end
   end
 end
 
-loop do
-  player = Player.total_num_of_pieces.even? ? player_two : player_one
-  puts "#{player.piece}'s turn."
-  input = input_getter(game_board)
-  game_board[input[0]][input[1]] = player.place_piece
-  game_board.each { |row| p row }
+def game
+  game_board = Array.new(3) { Array.new(3, ' ') }
+  player_array = choose_pieces
+  loop do
+    player = Player.total_num_of_pieces.even? ? player_array[0] : player_array[1]
+    puts "#{player.piece}'s turn."
+    input = input_getter(game_board)
+    game_board[input[0]][input[1]] = player.place_piece
+    game_board.each { |row| p row }
+  end
 end
+
+game
