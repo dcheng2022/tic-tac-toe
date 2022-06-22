@@ -17,7 +17,19 @@ class Player
     piece
   end
 
-  def player_win?
+  def player_win?(board, pos)
+    # row check
+    row = pos[0]
+    return true if board[row].all? { |item| item == piece }
+
+    # column check
+    column = pos[1]
+    return true if board.reduce(0) { |sum, line| line[column] == piece ? sum + 1 : sum } == 3
+
+    # diagonal check
+    return unless board[1][1] == piece
+
+    true if board[0][2] == piece && board[2][0] == piece || board[0][0] == piece && board[2][2] == piece
   end
 
   def game_draw?
@@ -65,7 +77,10 @@ def game
     input = input_getter(game_board)
     game_board[input[0]][input[1]] = player.place_piece
     game_board.each { |row| p row }
-    if player.game_draw?
+    if Player.total_num_of_pieces > 4 && player.player_win?(game_board, input)
+      puts "#{player.piece} wins with #{Player.total_num_of_pieces} pieces placed overall!"
+      break
+    elsif player.game_draw?
       puts 'Draw! Better luck next time.'
       break
     end
