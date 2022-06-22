@@ -20,7 +20,8 @@ class Player
   def player_win?
   end
 
-  def game_draw? 
+  def game_draw?
+    true if @@total_num_of_pieces == 9
   end
 end
 
@@ -64,6 +65,10 @@ def game
     input = input_getter(game_board)
     game_board[input[0]][input[1]] = player.place_piece
     game_board.each { |row| p row }
+    if player.game_draw?
+      puts 'Draw! Better luck next time.'
+      break
+    end
   end
 end
 
