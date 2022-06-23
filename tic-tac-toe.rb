@@ -72,9 +72,7 @@ def print_board(board)
   puts "     1    2    3\n    —————————————"
   board.each_with_index do |row, idx|
     print "#{(idx + 65).chr}   | "
-    row.each do |pos|
-      print "#{pos} | "
-    end
+    row.each { |pos| print "#{pos} | " }
     print "\n    —————————————\n"
   end
 end
