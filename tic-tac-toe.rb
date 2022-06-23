@@ -87,7 +87,7 @@ def game
   | |  | | |   _____| | / _ \| |   _____| || | | |  _|
   | |  | | |__|_____| |/ ___ \ |__|_____| || |_| | |___ 
   |_| |___\____|    |_/_/   \_\____|    |_| \___/|_____|
-                                                         '
+  '
   player_array = choose_pieces
   loop do
     player = Player.total_num_of_pieces.even? ? player_array[0] : player_array[1]
