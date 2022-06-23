@@ -68,6 +68,14 @@ def choose_pieces
   end
 end
 
+def print_board(board)
+  puts '     1    2    3'
+  board.each_with_index do |row, idx|
+    print "#{(idx + 65).chr}  "
+    p row
+  end
+end
+
 def game
   game_board = Array.new(3) { Array.new(3, ' ') }
   puts '
@@ -83,7 +91,7 @@ def game
     puts "#{player.piece}'s turn."
     input = input_getter(game_board)
     game_board[input[0]][input[1]] = player.place_piece
-    game_board.each { |row| p row }
+    print_board(game_board)
     if Player.total_num_of_pieces > 4 && player.player_win?(game_board, input)
       puts "#{player.piece} wins with #{Player.total_num_of_pieces} pieces placed overall!"
       break
